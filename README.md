@@ -1,87 +1,84 @@
-# winrm
+# WinRM module for Puppet
 
-Welcome to your new module. A short overview of the generated parts can be found in the PDK documentation at https://puppet.com/docs/pdk/latest/pdk_generating_modules.html .
-
-The README template below provides a starting point with details about what information to include in your README.
+[![Build Status](https://travis-ci.org/EncoreTechnologies/puppet-winrm.png?branch=master)](https://travis-ci.org/EncoreTechnologies/puppet-winrm)
+[![Code Coverage](https://coveralls.io/repos/github/EncoreTechnologies/puppet-winrm/badge.svg?branch=master)](https://coveralls.io/github/EncoreTechnologies/puppet-winrm)
+[![Puppet Forge](https://img.shields.io/puppetforge/v/puppet/winrm.svg)](https://forge.puppetlabs.com/puppet/winrm)
+[![Puppet Forge - downloads](https://img.shields.io/puppetforge/dt/puppet/winrm.svg)](https://forge.puppetlabs.com/puppet/winrm)
+[![Puppet Forge - endorsement](https://img.shields.io/puppetforge/e/puppet/winrm.svg)](https://forge.puppetlabs.com/puppet/winrm)
+[![Puppet Forge - scores](https://img.shields.io/puppetforge/f/puppet/winrm.svg)](https://forge.puppetlabs.com/puppet/winrm)
 
 #### Table of Contents
 
-1. [Description](#description)
-2. [Setup - The basics of getting started with winrm](#setup)
-    * [What winrm affects](#what-winrm-affects)
+1. [Description - What the module does and why it is useful](#module-description)
+1. [Setup - The basics of getting started with winrm](#setup)
     * [Setup requirements](#setup-requirements)
-    * [Beginning with winrm](#beginning-with-winrm)
-3. [Usage - Configuration options and additional functionality](#usage)
-4. [Limitations - OS compatibility, etc.](#limitations)
-5. [Development - Guide for contributing to the module](#development)
+1. [Usage - Configuration options and additional functionality](#usage)
+1. [Reference - Parameters and explanations](#reference)
 
-## Description
+## Module Description
 
-Briefly tell users why they might want to use your module. Explain what your module does and what kind of problems users can solve with it.
-
-This should be a fairly short description helps the user decide if your module is what they want.
+This module configures and maintains the WinRM configurations on a Windows system.
 
 ## Setup
 
-### What winrm affects **OPTIONAL**
+##Setup requirements
 
-If it's obvious what your module touches, you can skip this section. For example, folks can probably figure out that your mysql_instance module affects their MySQL instances.
-
-If there's more that they should know about, though, this is the place to mention:
-
-* Files, packages, services, or operations that the module will alter, impact, or execute.
-* Dependencies that your module automatically installs.
-* Warnings or other important notices.
-
-### Setup Requirements **OPTIONAL**
-
-If your module requires anything extra before setting up (pluginsync enabled, another module, etc.), mention it here.
-
-If your most recent release breaks compatibility or requires particular steps for upgrading, you might want to include an additional "Upgrading" section here.
-
-### Beginning with winrm
-
-The very basic steps needed for a user to get the module up and running. This can include setup steps, if necessary, or it can be an example of the most basic use of the module.
+You need to be running powershell 4 or greater for this module to work correctly
 
 ## Usage
 
-Include usage examples for common use cases in the **Usage** section. Show your users how to use your module to solve problems, and be sure to include code examples. Include three to five examples of the most important or common tasks a user can accomplish with your module. Show users how to accomplish more complex tasks that involve different types, classes, and functions working in tandem.
 
 ## Reference
 
-This section is deprecated. Instead, add reference information to your code as Puppet Strings comments, and then use Strings to generate a REFERENCE.md in your module. For details on how to add code comments and generate documentation with Strings, see the Puppet Strings [documentation](https://puppet.com/docs/puppet/latest/puppet_strings.html) and [style guide](https://puppet.com/docs/puppet/latest/puppet_strings_style.html)
+### Parameters
 
-If you aren't ready to use Strings yet, manually create a REFERENCE.md in the root of your module directory and list out each of your module's classes, defined types, facts, functions, Puppet tasks, task plans, and resource types and providers, along with the parameters for each.
+#### allow_unencrypted_enable
 
-For each element (class, defined type, function, and so on), list:
+Is unencrypted traffic allowed? Default is false.
 
-  * The data type, if applicable.
-  * A description of what the element does.
-  * Valid values, if the data type doesn't make it obvious.
-  * Default value, if any.
+#### auth_basic_enable
 
-For example:
+Is Basic Authentication allowed? Default is false
 
-```
-### `pet::cat`
+#### auth_credssp_enable
 
-#### Parameters
+Is CredSSP Authentication allowed? Default is false
 
-##### `meow`
+#### auth_kerberos_enable
 
-Enables vocalization in your cat. Valid options: 'string'.
+Is Kerberos Authentication allowed? Default is true
 
-Default: 'medium-loud'.
-```
+#### auth_negotiate_enable
 
-## Limitations
+Is Negotiate Authentication allowed? Default is true
 
-In the Limitations section, list any incompatibilities, known issues, or other warnings.
+#### certificate_hash
 
-## Development
+If not using a Self Signed Certificate then this hash can be passed in
+and used for the HTTPs/SSL listener
 
-In the Development section, tell other users the ground rules for contributing to your project and how they should submit their work.
+#### cert_validity_days
 
-## Release Notes/Contributors/Etc. **Optional**
+Length of time in days the Self Signed certificate is good for. Default is 1095
 
-If you aren't using changelog, put your release notes here (though you should consider using changelog). You can also add any additional sections you feel are necessary or important to include here. Please use the `## ` header.
+#### execution_policy
+
+Server execution policy to follow.
+Available options are: 'AllSigned', 'Bypass', 'RemoteSigned', 'Restricted', 'Undefined', 'Unrestricted'
+Defualt is RemoteSigned
+
+#### http_listener_enable
+
+Should winrm be listening for http connections. Defialt is false
+
+#### https_listener_enable
+
+Should winrm be listening for https connections. Defialt is true
+
+#### local_account_token_filter_policy_enable
+
+If LocalAccountTokenFilterPolicy should be enabled? Default is true
+
+#### skip_network_profile_check
+
+If Enable-PSRemoting should skip the network profile check. Default is false
