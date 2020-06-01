@@ -6,7 +6,7 @@ class winrm::config::listener::http (
   if $http_listener_enable {
     exec { 'Enable-HTTP-Listener':
       command   => "New-WSManInstance -ResourceUri winrm/config/Listener -SelectorSet @{Address='*';Transport='HTTP'}",
-      unless    => "If (!((Get-ChildItem WSMan:\localhost\Listener) | Where {$_.Keys -like 'TRANSPORT=HTTP'})) { exit 1 } else { exit 0 }",
+      unless    => 'Try { If (!((Get-ChildItem WSMan:\localhost\Listener) | Where {$_.Keys -like "TRANSPORT=HTTP"})) { Write-Output "Here"; exit 1 } else { exit 0 } } Catch { $exception_str = $_ | Out-String; Write-Output "an error occurred: $exception_str" }',
       provider  => powershell,
     }
   } else {
