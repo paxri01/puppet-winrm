@@ -11,7 +11,7 @@ class winrm::config::localaccounttokenfilter (
   registry_value { 'LocalAccountTokenFilterPolicy':
       path       => 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System\LocalAccountTokenFilterPolicy',
       ensure     => present,
-      type       => 'DWORD',
+      type       => 'dword',
       data       => $policy_value,
     }
 }
