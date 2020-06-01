@@ -1,9 +1,9 @@
 # https://forge.puppet.com/puppet/windows_firewall
 class winrm::config::firewall (
-  Boolean $http_listener_enabled = $winrm::http_listener_enabled,
+  Boolean $http_listener_enable = $winrm::http_listener_enable,
   Boolean $https_listener_enable = $winrm::https_listener_enable,
 ) {
-  if $http_listener_enabled {
+  if $http_listener_enable {
     windows_firewall::exception { 'WINRM HTTP':
       ensure       => present,
       direction    => 'in',
