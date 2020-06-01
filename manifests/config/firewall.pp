@@ -23,7 +23,7 @@ class winrm::config::firewall (
     protocol     => 'TCP',
     local_port   => 5985,
     remote_port  => 'any',
-    display_name => 'Windows Remote Management HTTP-In',
+    display_name => 'Windows Remote Management (HTTP-In)',
     description  => 'Inbound rule for Windows Remote Management via WS-Management. [TCP 5985]',
   }
 
@@ -35,7 +35,7 @@ class winrm::config::firewall (
     protocol     => 'TCP',
     local_port   => 5986,
     remote_port  => 'any',
-    display_name => 'Windows Remote Management HTTPS-In',
+    display_name => 'Windows Remote Management (HTTPS-In)',
     description  => 'Inbound rule for Windows Remote Management via WS-Management. [TCP 5986]',
   }
 

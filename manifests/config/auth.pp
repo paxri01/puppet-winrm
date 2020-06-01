@@ -8,6 +8,6 @@ class winrm::config::auth (
   exec { 'Configure-Auth':
     command  => template('winrm/auth/auth_settings.ps1.erb'),
     provider => 'powershell',
-    onlyif   => template('winrm/auth/auth_settings_onlyif.ps1.erb'),
+    unless   => template('winrm/auth/auth_settings_onlyif.ps1.erb'),
   }
 }

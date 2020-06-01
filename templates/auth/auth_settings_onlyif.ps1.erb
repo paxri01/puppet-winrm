@@ -11,7 +11,7 @@ function Check-AuthSetting {
 
   $authSetting = Get-ChildItem WSMan:\localhost\Service\Auth | Where-Object {$_.Name -eq $AuthType}
   If (($authSetting.Value) -ne $AuthValue) {
-    Exit 0
+    Exit 1
   }
 }
 
