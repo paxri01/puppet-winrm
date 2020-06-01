@@ -51,9 +51,9 @@ Try {
   $NegotiateEnable = Convert-StringToBoolean -BoolString '<%= @negotiate_enable %>'
 
   Check-AuthSetting -AuthType "Basic" -AuthValue $BasicEnable
-  Check-AuthSetting -AuthType "Kerberos" -AuthValue $CredSSPEnable
-  Check-AuthSetting -AuthType "Negotiate" -AuthValue $KerberosEnable
-  Check-AuthSetting -AuthType "CredSSP" -AuthValue $NegotiateEnable
+  Check-AuthSetting -AuthType "CredSSP" -AuthValue $CredSSPEnable
+  Check-AuthSetting -AuthType "Kerberos" -AuthValue $KerberosEnable
+  Check-AuthSetting -AuthType "Negotiate" -AuthValue $NegotiateEnable
 } Catch {
   $exception_str = $_ | Out-String
   Write-Output "[$(Get-Date -Format 'o')] an error occurred: $exception_str"
