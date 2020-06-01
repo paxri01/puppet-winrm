@@ -6,8 +6,8 @@ class winrm::config::listener::https (
   Integer $cert_validity_days    = $winrm::cert_validity_days,
 ) {
   exec { 'Configure-HTTPS-Listener':
-    command  => template('winrm/auth/https_listener.ps1.erb'),
+    command  => template('winrm/listener/https_listener.ps1.erb'),
     provider => 'powershell',
-    onlyif   => template('winrm/auth/https_listener_onlyif.ps1.erb'),
+    onlyif   => template('winrm/listener/https_listener_onlyif.ps1.erb'),
   }
 }
