@@ -3,7 +3,7 @@
 class winrm::config::listener::http (
   Boolean $http_listener_enable = $winrm::http_listener_enable,
 ) {
-  if $http_listener_enabled {
+  if $http_listener_enable {
     exec { 'Enable-HTTP-Listener':
       command   => "New-WSManInstance -ResourceUri winrm/config/Listener -SelectorSet @{Address='*';Transport='HTTP'}",
       unless    => "If (!((Get-ChildItem WSMan:\localhost\Listener) | Where {$_.Keys -like 'TRANSPORT=HTTP'})) { exit 1 }",
