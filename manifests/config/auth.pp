@@ -5,7 +5,7 @@ class winrm::config::auth (
   Boolean $kerberos_enable  = $winrm::auth_kerberos_enable,
   Boolean $negotiate_enable = $winrm::auth_negotiate_enable,
 ) {
-  exec { 'Configure Auth':
+  exec { 'Configure-Auth':
     command  => template('winrm/auth/auth_settings.ps1.erb'),
     provider => 'powershell',
     onlyif   => template('winrm/auth/auth_settings_onlyif.ps1.erb'),

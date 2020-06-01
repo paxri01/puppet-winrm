@@ -3,7 +3,7 @@ class winrm::config::execution_policy (
   String $execution_policy = $winrm::execution_policy,
 ) {
 
-  exec { 'Enable-PSRemoting':
+  exec { 'Set-Execution-Policy':
     command   => "Set-ExecutionPolicy -ExecutionPolicy ${execution_policy} -Scope LocalMachine -Force",
     unless    => "If ((Get-ExecutionPolicy -Scope LocalMachine) -ne '${execution_policy}') { exit 1 }",
     provider  => powershell,
