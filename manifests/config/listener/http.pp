@@ -6,13 +6,13 @@ class winrm::config::listener::http (
   if $http_listener_enable {
     exec { 'Enable-HTTP-Listener':
       command   => "New-WSManInstance -ResourceUri winrm/config/Listener -SelectorSet @{Address='*';Transport='HTTP'}",
-      unless    => "If (!((Get-ChildItem WSMan:\localhost\Listener) | Where {$_.Keys -like 'TRANSPORT=HTTP'})) { exit 1 }",
+      unless    => "If (!((Get-ChildItem WSMan:\localhost\Listener) | Where {$_.Keys -like 'TRANSPORT=HTTP'})) { exit 1 } else { exit 0 }",
       provider  => powershell,
     }
   } else {
     exec { 'Disable-HTTP-Listener':
       command   => "Remove-WSManInstance -ResourceUri winrm/config/Listener -SelectorSet @{Address='*';Transport='HTTP'}",
-      unless    => "If (((Get-ChildItem WSMan:\localhost\Listener) | Where {$_.Keys -like 'TRANSPORT=HTTP'})) { exit 1 }",
+      unless    => "If (((Get-ChildItem WSMan:\localhost\Listener) | Where {$_.Keys -like 'TRANSPORT=HTTP'})) { exit 1 } else { exit 0 }",
       provider  => powershell,
     }
   }
