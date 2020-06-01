@@ -20,8 +20,8 @@ class winrm::config {
   contain winrm::config::execution_policy
   contain winrm::config::localaccounttokenfilter
   contain winrm::config::auth
-  contain winrm::config::lisener:http
-  contain winrm::config::lisener:https
+  contain winrm::config::listener:http
+  contain winrm::config::listener:https
   contain winrm::config::firewall
 
   Class['winrm::config::allow_unencrypted']
@@ -29,7 +29,7 @@ class winrm::config {
   ~> Class['winrm::config::execution_policy']
   ~> Class['winrm::config::localaccounttokenfilter']
   ~> Class['winrm::config::auth']
-  ~> Class['winrm::config::lisener:http']
-  ~> Class['winrm::config::lisener:https']
+  ~> Class['winrm::config::listener:http']
+  ~> Class['winrm::config::listener:https']
   ~> Class['winrm::config::firewall']
 }
