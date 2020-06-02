@@ -99,7 +99,7 @@ $ErrorActionPreference = "Stop"
 
 Try {
   $SubjectName = $env:COMPUTERNAME
-  $BasicEnable = Convert-StringToBoolean -BoolString '<%= @https_listener_enable %>'
+  $HttpsListenerEnable = Convert-StringToBoolean -BoolString '<%= @https_listener_enable %>'
   $CertificateHash = '<%= @certificate_hash %>'
   $CertValidityDays = <%= @cert_validity_days %>
 
