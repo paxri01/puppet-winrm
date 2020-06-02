@@ -2,10 +2,10 @@
 
 [![Build Status](https://travis-ci.org/EncoreTechnologies/puppet-winrm.png?branch=master)](https://travis-ci.org/EncoreTechnologies/puppet-winrm)
 [![Code Coverage](https://coveralls.io/repos/github/EncoreTechnologies/puppet-winrm/badge.svg?branch=master)](https://coveralls.io/github/EncoreTechnologies/puppet-winrm)
-[![Puppet Forge](https://img.shields.io/puppetforge/v/puppet/winrm.svg)](https://forge.puppetlabs.com/puppet/winrm)
-[![Puppet Forge - downloads](https://img.shields.io/puppetforge/dt/puppet/winrm.svg)](https://forge.puppetlabs.com/puppet/winrm)
-[![Puppet Forge - endorsement](https://img.shields.io/puppetforge/e/puppet/winrm.svg)](https://forge.puppetlabs.com/puppet/winrm)
-[![Puppet Forge - scores](https://img.shields.io/puppetforge/f/puppet/winrm.svg)](https://forge.puppetlabs.com/puppet/winrm)
+[![Puppet Forge](https://img.shields.io/puppetforge/v/encore/winrm.svg)](https://forge.puppetlabs.com/encore/winrm)
+[![Puppet Forge - downloads](https://img.shields.io/puppetforge/dt/encore/winrm.svg)](https://forge.puppetlabs.com/encore/winrm)
+[![Puppet Forge - endorsement](https://img.shields.io/puppetforge/e/encore/winrm.svg)](https://forge.puppetlabs.com/encore/winrm)
+[![Puppet Forge - scores](https://img.shields.io/puppetforge/f/encore/winrm.svg)](https://forge.puppetlabs.com/encore/winrm)
 
 #### Table of Contents
 
@@ -27,6 +27,23 @@ You need to be running powershell 4 or greater for this module to work correctly
 
 ## Usage
 
+Configure WinRM on Windows servers
+
+```puppet
+class { 'winrm':
+  allow_unencrypted_enable                 => false,
+  auth_basic_enable                        => false,
+  auth_credssp_enable                      => false,
+  auth_kerberos_enable                     => true,
+  auth_negotiate_enable                    => true,
+  cert_validity_days                       => 1095,
+  execution_policy                         => 'RemoteSigned',
+  http_listener_enable                     => false,
+  https_listener_enable                    => true,
+  local_account_token_filter_policy_enable => true,
+  skip_network_profile_check               => false,
+}
+```
 
 ## Reference
 
