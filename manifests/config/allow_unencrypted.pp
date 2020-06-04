@@ -4,15 +4,15 @@ class winrm::config::allow_unencrypted (
 ) {
   if $allow_unencrypted_enable {
     exec { 'Allow-Unencrypted-Traffic':
-      command   => 'Set-Item -Path "WSMan:\localhost\Service\AllowUnencrypted" -Value $true',
-      unless    => 'If ((Get-ChildItem WSMan:\localhost\Service\AllowUnencrypted).Value -ne $true) { exit 1 }',
-      provider  => powershell,
+      command  => 'Set-Item -Path "WSMan:\localhost\Service\AllowUnencrypted" -Value $true',
+      unless   => 'If ((Get-ChildItem WSMan:\localhost\Service\AllowUnencrypted).Value -ne $true) { exit 1 }',
+      provider => powershell,
     }
   } else {
     exec { 'Block-Unencrypted-Traffic':
-      command   => 'Set-Item -Path "WSMan:\localhost\Service\AllowUnencrypted" -Value $false',
-      unless    => 'If ((Get-ChildItem WSMan:\localhost\Service\AllowUnencrypted).Value -ne $false) { exit 1 }',
-      provider  => powershell,
+      command  => 'Set-Item -Path "WSMan:\localhost\Service\AllowUnencrypted" -Value $false',
+      unless   => 'If ((Get-ChildItem WSMan:\localhost\Service\AllowUnencrypted).Value -ne $false) { exit 1 }',
+      provider => powershell,
     }
   }
 }

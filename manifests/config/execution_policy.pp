@@ -4,8 +4,8 @@ class winrm::config::execution_policy (
 ) {
 
   exec { 'Set-Execution-Policy':
-    command   => "Set-ExecutionPolicy -ExecutionPolicy ${execution_policy} -Scope LocalMachine -Force",
-    unless    => "If ((Get-ExecutionPolicy -Scope LocalMachine) -ne '${execution_policy}') { exit 1 }",
-    provider  => powershell,
+    command  => "Set-ExecutionPolicy -ExecutionPolicy ${execution_policy} -Scope LocalMachine -Force",
+    unless   => "If ((Get-ExecutionPolicy -Scope LocalMachine) -ne '${execution_policy}') { exit 1 }",
+    provider => powershell,
   }
 }

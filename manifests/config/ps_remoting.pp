@@ -9,8 +9,8 @@ class winrm::config::ps_remoting (
   }
 
   exec { 'Enable-PSRemoting':
-    command   => 'Enable-PSRemoting -Force -ErrorAction Stop',
-    unless    => 'If (!(Get-PSSessionConfiguration -Verbose:$false) -or (!(Get-ChildItem WSMan:\localhost\Listener))) { exit 1 }',
-    provider  => powershell,
+    command  => 'Enable-PSRemoting -Force -ErrorAction Stop',
+    unless   => 'If (!(Get-PSSessionConfiguration -Verbose:$false) -or (!(Get-ChildItem WSMan:\localhost\Listener))) { exit 1 }',
+    provider => powershell,
   }
 }

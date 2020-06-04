@@ -1,3 +1,4 @@
+# Contains all items to configure WinRM as well as passing variables to the methods.
 class winrm::config {
 
   assert_private()
