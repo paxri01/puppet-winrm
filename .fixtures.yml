@@ -4,7 +4,6 @@
 fixtures:
   forge_modules:
     stdlib: "puppetlabs/stdlib"
-    windows_firewall: "puppet/windows_firewall"
     powershell: "puppetlabs/powershell"
     registry: "puppetlabs/registry"
   symlinks:
