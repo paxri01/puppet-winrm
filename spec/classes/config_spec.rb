@@ -4,7 +4,6 @@ describe 'winrm' do
   on_supported_os.each do |os, facts|
     context "on #{os} " do
       let :facts do
-        { operatingsystemversion: os }
         facts
       end
 
@@ -13,8 +12,7 @@ describe 'winrm' do
         it { is_expected.to contain_class('winrm::config::ps_remoting').that_comes_before('Class[winrm::config::execution_policy]') }
         it { is_expected.to contain_class('winrm::config::execution_policy').that_comes_before('Class[winrm::config::localaccounttokenfilter]') }
         it {
-          is_expected.to
-          contain_class('winrm::config::localaccounttokenfilter')
+          is_expected.to contain_class('winrm::config::localaccounttokenfilter')
             .that_comes_before('Class[winrm::config::auth]')
         }
         it { is_expected.to contain_class('winrm::config::auth').that_comes_before('Class[winrm::config::listener::http]') }
