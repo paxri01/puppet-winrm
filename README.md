@@ -1,11 +1,11 @@
 # WinRM module for Puppet
 
-[![Build Status](https://travis-ci.org/EncoreTechnologies/puppet-winrm.png?branch=master)](https://travis-ci.org/EncoreTechnologies/puppet-winrm)
-[![Code Coverage](https://coveralls.io/repos/github/EncoreTechnologies/puppet-winrm/badge.svg?branch=master)](https://coveralls.io/github/EncoreTechnologies/puppet-winrm)
-[![Puppet Forge](https://img.shields.io/puppetforge/v/encore/winrm.svg)](https://forge.puppetlabs.com/encore/winrm)
-[![Puppet Forge - downloads](https://img.shields.io/puppetforge/dt/encore/winrm.svg)](https://forge.puppetlabs.com/encore/winrm)
-[![Puppet Forge - endorsement](https://img.shields.io/puppetforge/e/encore/winrm.svg)](https://forge.puppetlabs.com/encore/winrm)
-[![Puppet Forge - scores](https://img.shields.io/puppetforge/f/encore/winrm.svg)](https://forge.puppetlabs.com/encore/winrm)
+[![Build Status](https://travis-ci.org/EncoreTechnologies/puppet-winrm.svg?branch=master)](https://travis-ci.org/EncoreTechnologies/puppet-winrm)
+[![Puppet Forge Version](https://img.shields.io/puppetforge/v/encore/winrm.svg)](https://forge.puppet.com/encore/winrm)
+[![Puppet Forge Downloads](https://img.shields.io/puppetforge/dt/encore/winrm.svg)](https://forge.puppet.com/encore/winrm)
+[![Puppet Forge Score](https://img.shields.io/puppetforge/f/encore/winrm.svg)](https://forge.puppet.com/encore/winrm)
+[![Puppet PDK Version](https://img.shields.io/puppetforge/pdk-version/encore/winrm.svg)](https://forge.puppet.com/encore/winrm)
+[![puppetmodule.info docs](http://www.puppetmodule.info/images/badge.png)](http://www.puppetmodule.info/m/encore-winrm)
 
 #### Table of Contents
 
