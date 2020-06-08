@@ -1,16 +1,6 @@
-# Author::    Liam Bennett (mailto:lbennett@opentable.com)
-# Copyright:: Copyright (c) 2013 OpenTable Inc
-# License::   MIT
-
-# == Class winrm::service
-#
-# This class is meant to be called from `winrm`
-# It ensure the service is running
+# @summary Ensure the service is available and running and set to Automatic on boot.
 #
 class winrm::service {
-
-  assert_private()
-
   service { 'WinRM':
     ensure => running,
     # Sets startup type to 'Automatic'

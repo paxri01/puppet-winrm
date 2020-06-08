@@ -1,4 +1,5 @@
-# https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/enable-psremoting?view=powershell-7
+# @summary Configures the use of Powershell remoting
+#          https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/enable-psremoting?view=powershell-7
 class winrm::config::ps_remoting (
   Boolean $skip_network_profile_check = $winrm::skip_network_profile_check,
 ) {

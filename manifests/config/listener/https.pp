@@ -1,5 +1,7 @@
-# https://docs.microsoft.com/en-us/powershell/module/microsoft.wsman.management/new-wsmaninstance?view=powershell-7
-# https://docs.microsoft.com/en-us/powershell/module/microsoft.wsman.management/remove-wsmaninstance?view=powershell-7
+# @summary Configures the SSL (HTTPS) listener on the system. Also attaches a Certificate to the listen.
+#          Will either generate a self signed one or a hash can be passed in.
+#          https://docs.microsoft.com/en-us/powershell/module/microsoft.wsman.management/new-wsmaninstance?view=powershell-7
+#          https://docs.microsoft.com/en-us/powershell/module/microsoft.wsman.management/remove-wsmaninstance?view=powershell-7
 class winrm::config::listener::https (
   Boolean $https_listener_enable = $winrm::https_listener_enable,
   String $certificate_hash       = $winrm::certificate_hash,

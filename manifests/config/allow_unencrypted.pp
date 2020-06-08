@@ -1,4 +1,5 @@
-# https://www.windows-security.org/b39e2859968e78097aed08388fdf7a01/allow-unencrypted-traffic
+# @summary Conifigures winrm service to allows unencrypted traffic to be transfered.
+#          https://www.windows-security.org/b39e2859968e78097aed08388fdf7a01/allow-unencrypted-traffic
 class winrm::config::allow_unencrypted (
   Boolean $allow_unencrypted_enable = $winrm::allow_unencrypted_enable,
 ) {

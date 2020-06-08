@@ -1,4 +1,5 @@
-# https://docs.microsoft.com/en-us/windows/win32/winrm/authentication-for-remote-connections
+# @summary Configures the different authentication methods that will be accepted on the system
+#          https://docs.microsoft.com/en-us/windows/win32/winrm/authentication-for-remote-connections
 class winrm::config::auth (
   Boolean $basic_enable     = $winrm::auth_basic_enable,
   Boolean $credssp_enable   = $winrm::auth_credssp_enable,
