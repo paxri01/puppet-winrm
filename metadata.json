@@ -7,11 +7,6 @@
   "source": "https://github.com/EncoreTechnologies/puppet-winrm.git",
   "project_page": "https://github.com/EncoreTechnologies/puppet-winrm",
   "issues_url": "https://github.com/EncoreTechnologies/puppet-winrm/issues",
-  "tags": [
-    "windows",
-    "winrm",
-    "remote management"
-  ],
   "dependencies": [
     {
       "name": "puppetlabs/powershell",
@@ -37,6 +32,11 @@
       "name": "puppet",
       "version_requirement": ">= 4.10.0 < 7.0.0"
     }
+  ],
+  "tags": [
+    "windows",
+    "winrm",
+    "remote management"
   ],
   "pdk-version": "1.18.0",
   "template-url": "pdk-default#1.18.0",
