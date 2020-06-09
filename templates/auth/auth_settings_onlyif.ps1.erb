@@ -34,10 +34,10 @@ function Convert-StringToBoolean {
 $ErrorActionPreference = "Stop"
 
 Try {
-  $BasicEnable = Convert-StringToBoolean -BoolString '<%= @basic_enable %>'
-  $CredSSPEnable = Convert-StringToBoolean -BoolString '<%= @credssp_enable %>'
-  $KerberosEnable = Convert-StringToBoolean -BoolString '<%= @kerberos_enable %>'
-  $NegotiateEnable = Convert-StringToBoolean -BoolString '<%= @negotiate_enable %>'
+  $BasicEnable = Convert-StringToBoolean -BoolString '<%= @auth_basic_enable %>'
+  $CredSSPEnable = Convert-StringToBoolean -BoolString '<%= @auth_credssp_enable %>'
+  $KerberosEnable = Convert-StringToBoolean -BoolString '<%= @auth_kerberos_enable %>'
+  $NegotiateEnable = Convert-StringToBoolean -BoolString '<%= @auth_negotiate_enable %>'
 
   Check-AuthSetting -AuthType "Basic" -AuthValue $BasicEnable
   Check-AuthSetting -AuthType "CredSSP" -AuthValue $CredSSPEnable

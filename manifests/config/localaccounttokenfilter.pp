@@ -1,9 +1,9 @@
 # @summary Allows the use of a local account to have remote access to the system.
 #          https://support.microsoft.com/en-us/help/951016/description-of-user-account-control-and-remote-restrictions-in-windows
 class winrm::config::localaccounttokenfilter (
-  Boolean $policy_enable = $winrm::local_account_token_filter_policy_enable,
+  Boolean $local_account_token_filter_policy_enable = $winrm::local_account_token_filter_policy_enable,
 ) {
-  if $policy_enable {
+  if $local_account_token_filter_policy_enable {
     $policy_value = '1'
   } else {
     $policy_value = '0'
