@@ -1,0 +1,132 @@
+# Check Firewall configurations
+# -----------------------------------------------------------
+#
+# This script checks the current firewall configurations against
+# what is passed in and changes them if neccessary using netsh
+# commands. We use netsh commands instead of the powershell
+# commandlets due to speed, functionality, and backwards compatibility
+function Get-NetshRule {
+  Param (
+    [string]$RuleName
+  )
+  $AllRules = @()
+
+  # Get all enabled rules
+  $Rules = netsh advfirewall firewall show rule status=enabled name="$RuleName"
+
+  # Check if rules are returened
+  $NoMatchString = "No rules match the specified criteria."
+  If ($Rules -eq $NoMatchString) {
+    Return $AllRules
+  }
+
+  # Verify the return is an array
+  If ($Rules -ne [System.Array] ) {
+    $Rules = @($Rules)
+  }
+
+  $SwitchProperties = @{}
+  ForEach ($Rule in $Rules) {
+    # $RuleObject = @{}
+    # Matches is a variable created by the switch that is an object of the matching text
+    # We add to the list on the last property of the rule because the Switch Regex separates
+    # into individual line creating the object in the current context.
+    # Sample rule below:
+    #   Rule Name:                            Windows Remote Management (HTTP-In)
+    #   ----------------------------------------------------------------------
+    #   Enabled:                              Yes
+    #   Direction:                            In
+    #   Profiles:                             Domain,Private
+    #   Grouping:                             Windows Remote Management
+    #   LocalIP:                              Any
+    #   RemoteIP:                             Any
+    #   Protocol:                             TCP
+    #   LocalPort:                            5985
+    #   RemotePort:                           Any
+    #   Edge traversal:                       No
+    #   Action:                               Allow
+    Switch -Regex ($Rule) {
+      '^Rule Name:\s+(?<RuleName>.*$)' { $SwitchProperties.RuleName = $Matches.RuleName; }
+      '^Enabled:\s+(?<Enabled>.*$)' { $SwitchProperties.Enabled = $Matches.Enabled; }
+      '^Direction:\s+(?<Direction>.*$)' { $SwitchProperties.Direction = $Matches.Direction; }
+      '^Profiles:\s+(?<Profiles>.*$)' { $SwitchProperties.Profiles = $Matches.Profiles; }
+      '^Grouping:\s+(?<Grouping>.*$)' { $SwitchProperties.Grouping = $Matches.Grouping; }
+      '^LocalIP:\s+(?<LocalIP>.*$)' { $SwitchProperties.LocalIP = $Matches.LocalIP; }
+      '^RemoteIP:\s+(?<RemoteIP>.*$)' { $SwitchProperties.RemoteIP = $Matches.RemoteIP; }
+      '^Protocol:\s+(?<Protocol>.*$)' { $SwitchProperties.Protocol = $Matches.Protocol; }
+      '^LocalPort:\s+(?<LocalPort>.*$)' { $SwitchProperties.LocalPort = $Matches.LocalPort; }
+      '^RemotePort:\s+(?<RemotePort>.*$)' { $SwitchProperties.RemotePort = $Matches.RemotePort; }
+      '^Edge traversal:\s+(?<Edge_traversal>.*$)' { $SwitchProperties.EdgeTraversal = $Matches.Edge_traversal; }
+      '^Action:\s+(?<Action>.*$)' { $SwitchProperties.Action = $Matches.Action; $RuleObject = New-Object psobject -Property $SwitchProperties; $AllRules += $RuleObject; }
+      # Ignore any other lines that do not match above. Should only be: -------
+      Default { Break }
+    }
+  }
+
+  Return $AllRules
+}
+
+function Convert-StringToBoolean {
+  Param (
+    [string]$BoolString
+  )
+
+  $boolReturn = $true
+  If ($BoolString.ToLower() -eq 'false') {
+    $boolReturn = $false
+  }
+
+  return $boolReturn
+}
+
+# http://winintro.ru/netsh_technicalreference.en/html/1a736f2d-ecf8-4780-8e0f-85c4db75230b.htm
+function Test-FirewallRule {
+  Param (
+    [string]$Action,
+    [string]$Description,
+    [string]$Name,
+    [string]$Port,
+    [object[]]$Rules
+  )
+  $ActionLowerCase = $Action.ToLower()
+
+  If ($Rules.Count -eq 0) {
+    netsh advfirewall firewall add rule name="$Name" dir="in" action="$ActionLowerCase" description="$Description" localport="$Port" protocol="tcp"
+  } Elseif ($Rules.Count -gt 1) {
+    netsh advfirewall firewall delete rule name="$Name"
+    netsh advfirewall firewall add rule name="$Name" dir="in" action="$ActionLowerCase" description="$Description" localport="$Port" protocol="tcp"
+  } Else {
+    $Rule = $Rules[0]
+    If ($Rule.Action -ne $Action) {
+      netsh advfirewall firewall set rule name="$Name" new action="$ActionLowerCase"
+    }
+  }
+}
+
+Try {
+  $HttpRuleName = "Windows Remote Management (HTTP-In)"
+  $HttpsRuleName = "Windows Remote Management (HTTPS-In)"
+
+  $HttpRules = Get-NetshRule -RuleName $HttpRuleName
+  $HttpsRules = Get-NetshRule -RuleName $HttpsRuleName
+
+  $HttpEnable = Convert-StringToBoolean -BoolString '<%= @http_listener_enable %>'
+  $HttpsEnable = Convert-StringToBoolean -BoolString '<%= @https_listener_enable %>'
+
+  $HttpRuleAction = "Allow"
+  If (!($HttpEnable)) {
+    $HttpRuleAction = "Block"
+  }
+
+  $HttpsRuleAction = "Allow"
+  If (!($HttpsEnable)) {
+    $HttpsRuleAction = "Block"
+  }
+
+  Test-FirewallRule -Action $HttpRuleAction -Description "Inbound rule for Windows Remote Management via WS-Management. [TCP 5985]" -Name $HttpRuleName -Port "5985" -Rules $HttpRules
+  Test-FirewallRule -Action $HttpsRuleAction -Description "Inbound rule for Windows Remote Management via WS-Management. [TCP 5986]" -Name $HttpsRuleName -Port "5986" -Rules $HttpsRules
+} Catch {
+  $exception_str = $_ | Out-String
+  Write-Output "[$(Get-Date -Format 'o')] an error occurred: $exception_str"
+  Exit 1
+}

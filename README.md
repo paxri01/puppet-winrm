@@ -1,87 +1,154 @@
-# winrm
+# WinRM module for Puppet
 
-Welcome to your new module. A short overview of the generated parts can be found in the PDK documentation at https://puppet.com/docs/pdk/latest/pdk_generating_modules.html .
-
-The README template below provides a starting point with details about what information to include in your README.
+[![Build Status](https://travis-ci.org/EncoreTechnologies/puppet-winrm.svg?branch=master)](https://travis-ci.org/EncoreTechnologies/puppet-winrm)
+[![Puppet Forge Version](https://img.shields.io/puppetforge/v/encore/winrm.svg)](https://forge.puppet.com/encore/winrm)
+[![Puppet Forge Downloads](https://img.shields.io/puppetforge/dt/encore/winrm.svg)](https://forge.puppet.com/encore/winrm)
+[![Puppet Forge Score](https://img.shields.io/puppetforge/f/encore/winrm.svg)](https://forge.puppet.com/encore/winrm)
+[![Puppet PDK Version](https://img.shields.io/puppetforge/pdk-version/encore/winrm.svg)](https://forge.puppet.com/encore/winrm)
+[![puppetmodule.info docs](http://www.puppetmodule.info/images/badge.png)](http://www.puppetmodule.info/m/encore-winrm)
 
 #### Table of Contents
 
-1. [Description](#description)
-2. [Setup - The basics of getting started with winrm](#setup)
-    * [What winrm affects](#what-winrm-affects)
-    * [Setup requirements](#setup-requirements)
-    * [Beginning with winrm](#beginning-with-winrm)
-3. [Usage - Configuration options and additional functionality](#usage)
-4. [Limitations - OS compatibility, etc.](#limitations)
-5. [Development - Guide for contributing to the module](#development)
+1. [Description - What the module does and why it is useful](#module-description)
+1. [Setup - The basics of getting started with winrm](#setup-requirements)
+1. [Usage - Configuration options and additional functionality](#usage)
+1. [Reference - Parameters and explanations](#reference)
 
-## Description
+## Module Description
 
-Briefly tell users why they might want to use your module. Explain what your module does and what kind of problems users can solve with it.
+This module configures and maintains the WinRM configurations on a Windows system.
 
-This should be a fairly short description helps the user decide if your module is what they want.
+## Setup requirements
 
-## Setup
-
-### What winrm affects **OPTIONAL**
-
-If it's obvious what your module touches, you can skip this section. For example, folks can probably figure out that your mysql_instance module affects their MySQL instances.
-
-If there's more that they should know about, though, this is the place to mention:
-
-* Files, packages, services, or operations that the module will alter, impact, or execute.
-* Dependencies that your module automatically installs.
-* Warnings or other important notices.
-
-### Setup Requirements **OPTIONAL**
-
-If your module requires anything extra before setting up (pluginsync enabled, another module, etc.), mention it here.
-
-If your most recent release breaks compatibility or requires particular steps for upgrading, you might want to include an additional "Upgrading" section here.
-
-### Beginning with winrm
-
-The very basic steps needed for a user to get the module up and running. This can include setup steps, if necessary, or it can be an example of the most basic use of the module.
+You need to be running powershell 4 or greater for this module to work correctly.
 
 ## Usage
 
-Include usage examples for common use cases in the **Usage** section. Show your users how to use your module to solve problems, and be sure to include code examples. Include three to five examples of the most important or common tasks a user can accomplish with your module. Show users how to accomplish more complex tasks that involve different types, classes, and functions working in tandem.
+Basic usage:
+```puppet
+class { 'winrm': }
+```
+
+Advanced configuration WinRM on Windows servers:
+```puppet
+class { 'winrm':
+  allow_unencrypted_enable                 => false,
+  auth_basic_enable                        => false,
+  auth_credssp_enable                      => false,
+  auth_kerberos_enable                     => true,
+  auth_negotiate_enable                    => true,
+  cert_validity_days                       => 1095,
+  execution_policy                         => 'RemoteSigned',
+  http_listener_enable                     => false,
+  https_listener_enable                    => true,
+  local_account_token_filter_policy_enable => true,
+  skip_network_profile_check               => false,
+}
+```
+
+Firewall usage:
+```puppet
+class { 'winrm::config::firewall':
+  http_listener_enable  => false,
+  https_listener_enable => true,
+}
+```
 
 ## Reference
 
-This section is deprecated. Instead, add reference information to your code as Puppet Strings comments, and then use Strings to generate a REFERENCE.md in your module. For details on how to add code comments and generate documentation with Strings, see the Puppet Strings [documentation](https://puppet.com/docs/puppet/latest/puppet_strings.html) and [style guide](https://puppet.com/docs/puppet/latest/puppet_strings_style.html)
+### Parameters
 
-If you aren't ready to use Strings yet, manually create a REFERENCE.md in the root of your module directory and list out each of your module's classes, defined types, facts, functions, Puppet tasks, task plans, and resource types and providers, along with the parameters for each.
+#### allow_unencrypted_enable
 
-For each element (class, defined type, function, and so on), list:
-
-  * The data type, if applicable.
-  * A description of what the element does.
-  * Valid values, if the data type doesn't make it obvious.
-  * Default value, if any.
-
-For example:
-
-```
-### `pet::cat`
-
-#### Parameters
-
-##### `meow`
-
-Enables vocalization in your cat. Valid options: 'string'.
-
-Default: 'medium-loud'.
+Is unencrypted traffic allowed? Default is false.
+```puppet
+class { 'winrm::config::allow_unencrypted':
+  allow_unencrypted_enable => false,
+}
 ```
 
-## Limitations
+#### Auth
 
-In the Limitations section, list any incompatibilities, known issues, or other warnings.
+##### auth_basic_enable
 
-## Development
+Is Basic Authentication allowed? Default is false
 
-In the Development section, tell other users the ground rules for contributing to your project and how they should submit their work.
+##### auth_credssp_enable
 
-## Release Notes/Contributors/Etc. **Optional**
+Is CredSSP Authentication allowed? Default is false
 
-If you aren't using changelog, put your release notes here (though you should consider using changelog). You can also add any additional sections you feel are necessary or important to include here. Please use the `## ` header.
+##### auth_kerberos_enable
+
+Is Kerberos Authentication allowed? Default is true
+
+##### auth_negotiate_enable
+
+Is Negotiate Authentication allowed? Default is true
+
+```puppet
+class { 'winrm::config::auth':
+  auth_basic_enable     => false,
+  auth_credssp_enable   => false,
+  auth_kerberos_enable  => true,
+  auth_negotiate_enable => true,
+}
+```
+
+#### execution_policy
+
+Server execution policy to follow.
+Available options are: 'AllSigned', 'Bypass', 'RemoteSigned', 'Restricted', 'Undefined', 'Unrestricted'
+Defualt is RemoteSigned
+```puppet
+class { 'winrm::config::execution_policy':
+  execution_policy => 'RemoteSigned',
+}
+```
+
+#### http_listener_enable
+
+Should winrm be listening for http connections. Defialt is false
+```puppet
+class { 'winrm::config::listener::http':
+  http_listener_enable => false,
+}
+```
+
+#### https_listener_enable
+
+Should winrm be listening for https connections. Defialt is true
+
+#### certificate_hash
+
+If not using a Self Signed Certificate then this hash can be passed in
+and used for the HTTPs/SSL listener
+
+#### cert_validity_days
+
+```puppet
+class { 'winrm::config::listener::https':
+  cert_validity_days    => 1095,
+  certificate_hash      => 'test cert hash',
+  https_listener_enable => true,
+}
+```
+
+Length of time in days the Self Signed certificate is good for. Default is 1095
+
+#### local_account_token_filter_policy_enable
+
+If LocalAccountTokenFilterPolicy should be enabled? Default is true
+```puppet
+class { 'winrm::config::localaccounttokenfilter':
+  local_account_token_filter_policy_enable => true,
+}
+```
+
+#### skip_network_profile_check
+
+If Enable-PSRemoting should skip the network profile check. Default is false
+```puppet
+class { 'winrm::config::ps_remoting':
+  skip_network_profile_check => false,
+}
+```

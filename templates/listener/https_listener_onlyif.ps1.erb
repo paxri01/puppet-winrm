@@ -1,0 +1,55 @@
+# Check HTTPS Listener configurations
+# -----------------------------------------------------------
+#
+# This script checks the current HTTPS listener to see if see
+# if the listener is active and if it should be.
+
+# Puppet does not give the booleans to powershell in the correct way, they are given as strings.
+# So once given we need to convert them to true booleans so that the logic below will work
+function Convert-StringToBoolean {
+  Param (
+    [string]$BoolString
+  )
+
+  $boolReturn = $true
+  If ($BoolString.ToLower() -eq 'false') {
+    $boolReturn = $false
+  }
+
+  return $boolReturn
+}
+
+# Setup error handling.
+$ErrorActionPreference = "Stop"
+
+Try {
+  $SubjectName = $env:COMPUTERNAME
+  $HttpsListenerEnable = Convert-StringToBoolean -BoolString '<%= @https_listener_enable %>'
+  $CertificateHash = '<%= @certificate_hash %>'
+  $CertValidityDays = <%= @cert_validity_days %>
+
+  $listeners = Get-ChildItem WSMan:\localhost\Listener
+  # True
+  If ($HttpsListenerEnable) {
+    If (!($listeners | Where {$_.Keys -like "TRANSPORT=HTTPS"})) {
+      # No ssl listener and there there should be
+      Exit 0
+    } Else {
+      # Ssl listener and there there should be
+      Exit 1
+    }
+  # False
+  } Else {
+    If (($listeners | Where {$_.Keys -like "TRANSPORT=HTTPS"})) {
+      # Ssl listener and there should not be
+      Exit 0
+    } Else {
+      # No ssl listener and there should not be
+      Exit 1
+    }
+  }
+} Catch {
+  $exception_str = $_ | Out-String
+  Write-Output "[$(Get-Date -Format 'o')] an error occurred: $exception_str"
+  Exit 1
+}

@@ -1,0 +1,61 @@
+# Check Auth configurations
+# -----------------------------------------------------------
+#
+# This script checks the current Auth configurations vs the
+# passed in values.
+function Check-AuthSetting {
+  Param (
+    [string]$AuthType,
+    [boolean]$AuthValue
+  )
+
+  $authSetting = Get-ChildItem WSMan:\localhost\Service\Auth | Where-Object {$_.Name -eq $AuthType}
+  If (($authSetting.Value) -ne $AuthValue) {
+    If ($AuthType -eq "CredSSP") {
+      If ($AuthValue) {
+        # https://docs.microsoft.com/en-us/powershell/module/microsoft.wsman.management/enable-wsmancredssp?view=powershell-7
+        Enable-WSManCredSSP -role server -Force
+      } Else {
+        # https://docs.microsoft.com/en-us/powershell/module/microsoft.wsman.management/disable-wsmancredssp?view=powershell-7
+        Disable-WSManCredSSP -role server
+      }
+    } Else {
+      $auth_path = "WSMan:\localhost\Service\Auth\$AuthType"
+      Set-Item -Path $auth_path -Value $AuthValue
+    }
+  }
+}
+
+# Puppet does not give the booleans to powershell in the correct way, they are given as strings.
+# So once given we need to convert them to true booleans so that the logic below will work
+function Convert-StringToBoolean {
+  Param (
+    [string]$BoolString
+  )
+
+  $boolReturn = $true
+  If ($BoolString.ToLower() -eq 'false') {
+    $boolReturn = $false
+  }
+
+  return $boolReturn
+}
+
+# Setup error handling.
+$ErrorActionPreference = "Stop"
+
+Try {
+  $BasicEnable = Convert-StringToBoolean -BoolString '<%= @auth_basic_enable %>'
+  $CredSSPEnable = Convert-StringToBoolean -BoolString '<%= @auth_credssp_enable %>'
+  $KerberosEnable = Convert-StringToBoolean -BoolString '<%= @auth_kerberos_enable %>'
+  $NegotiateEnable = Convert-StringToBoolean -BoolString '<%= @auth_negotiate_enable %>'
+
+  Check-AuthSetting -AuthType "Basic" -AuthValue $BasicEnable
+  Check-AuthSetting -AuthType "CredSSP" -AuthValue $CredSSPEnable
+  Check-AuthSetting -AuthType "Kerberos" -AuthValue $KerberosEnable
+  Check-AuthSetting -AuthType "Negotiate" -AuthValue $NegotiateEnable
+} Catch {
+  $exception_str = $_ | Out-String
+  Write-Output "[$(Get-Date -Format 'o')] an error occurred: $exception_str"
+  Exit 1
+}
