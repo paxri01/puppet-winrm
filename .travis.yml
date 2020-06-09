@@ -47,3 +47,12 @@ branches:
     - /^v\d/
 notifications:
   email: false
+deploy:
+  provider: puppetforge
+  username: encore
+  password:
+    secure: "AgyQBNFBR0YGiOJhDBVDrP9KZv52Ix/Br31+i7Iihf0eDh4fgkbpwL7X8nQfcShs5sFGzhHSjjSpy/0V+lpq9CV7juLCqImNADsVfDM9og9uSXMUyCLom2dxVzJRYoA3CTrip3CNmUseFkiaBx/P8aFOr5u467RsSC+8nI7/cUEsg2FksnPap6+ID8lreNzWNI4WBu9H+QukuWjWdYbQUAaKJeATYhyDIVQQ+aVvjTCT77Wdcy5ibdDrzeAlx9pgcpXyvk7pj3zhe9KKj0ZNoAI5fqwXqymyKeMJhrxVMMSmPo+qAPbMcC3vTHJqbY/cdeRgkGhZ4BR3NROwhpatYNi6v41UjeRcQdwM9TW+x4ja+lMzBK3OzPZts4ClB3hvtwKMrZjtOoC7TNWMnqshBCXA1qcwF5Z3tb5hVz/npje7tSzJ6IZkf1qpzk6EuefsvZ7Z8UEx3YCBxdqFnvEgRIUy8NWr7UvUoF9RS3q7nZReBmjxS89YPl4JGLPMhb78e53ZP07kVWXX8zVBKECCNWwzeTTyV/Qog1Y9N3EfPeer2ofJEIWi2u0pY4zwEeFZsmmujbznPI0pTFedPxKdKqO1oSIcFWXCnfJzc8Dn6wByoMzuEavJFWAXgSf62tp4vwqZ2I92zwsvIzJDdcl1wRs1DCpWYKremfM5Z1kZI8w="
+  on:
+    tags: true
+    all_branches: true
+    condition: "$DEPLOY_TO_FORGE = yes"

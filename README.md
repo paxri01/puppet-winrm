@@ -125,6 +125,8 @@ and used for the HTTPs/SSL listener
 
 #### cert_validity_days
 
+Length of time in days the Self Signed certificate is good for. Default is 1095
+
 ```puppet
 class { 'winrm::config::listener::https':
   cert_validity_days    => 1095,
@@ -132,8 +134,6 @@ class { 'winrm::config::listener::https':
   https_listener_enable => true,
 }
 ```
-
-Length of time in days the Self Signed certificate is good for. Default is 1095
 
 #### local_account_token_filter_policy_enable
 
