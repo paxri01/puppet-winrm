@@ -1,6 +1,6 @@
 {
   "name": "encore-winrm",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "author": "Encore Technologies",
   "summary": "Module for configuring and managing Windows WinRM configurations",
   "license": "Apache-2.0",
@@ -34,9 +34,9 @@
     }
   ],
   "tags": [
-    "windows",
     "winrm",
-    "remote management"
+    "remote",
+    "management"
   ],
   "pdk-version": "1.18.0",
   "template-url": "pdk-default#1.18.0",
