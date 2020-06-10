@@ -2,10 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
-## Release 0.1.0
+## Development
 
-**Features**
+## Release 0.1.1 (2020-06-10)
 
-**Bugfixes**
+- Fixed package name in metadata
 
-**Known Issues**
+## Release 0.1.0 (2020-06-10)
+
+- Initial Release

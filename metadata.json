@@ -1,6 +1,6 @@
 {
-  "name": "puppet-winrm",
-  "version": "0.1.0",
+  "name": "encore-winrm",
+  "version": "0.1.1",
   "author": "Encore Technologies",
   "summary": "Module for configuring and managing Windows WinRM configurations",
   "license": "Apache-2.0",
