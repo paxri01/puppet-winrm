@@ -36,7 +36,7 @@ Try {
         Foreach ($https_list in $https_listeners) {
           If ($https_list.CertificateThumbprint -ne $CertificateHash) {
             # Certificate hash doesn't match
-            Exit 0
+            Exit 1
           }
         }
         # if all certs match, we'll exit 1 below (fall through)
@@ -45,12 +45,12 @@ Try {
     }
     Else {
       # No ssl listener and there there should be
-      Exit 0
+      Exit 1
     }
   }
-  Exit 1
+  Exit 0
 } Catch {
   $exception_str = $_ | Out-String
   Write-Output "[$(Get-Date -Format 'o')] an error occurred: $exception_str"
-  Exit 1
+  Exit 0
 }
