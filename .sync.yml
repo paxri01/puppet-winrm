@@ -15,14 +15,11 @@
 appveyor.yml:
   # we don't use Appveyor
   unmanaged: true
-.travis.yml:
-  deploy_to_forge:
-    enabled: true
-  user: encore
-  secure: "AgyQBNFBR0YGiOJhDBVDrP9KZv52Ix/Br31+i7Iihf0eDh4fgkbpwL7X8nQfcShs5sFGzhHSjjSpy/0V+lpq9CV7juLCqImNADsVfDM9og9uSXMUyCLom2dxVzJRYoA3CTrip3CNmUseFkiaBx/P8aFOr5u467RsSC+8nI7/cUEsg2FksnPap6+ID8lreNzWNI4WBu9H+QukuWjWdYbQUAaKJeATYhyDIVQQ+aVvjTCT77Wdcy5ibdDrzeAlx9pgcpXyvk7pj3zhe9KKj0ZNoAI5fqwXqymyKeMJhrxVMMSmPo+qAPbMcC3vTHJqbY/cdeRgkGhZ4BR3NROwhpatYNi6v41UjeRcQdwM9TW+x4ja+lMzBK3OzPZts4ClB3hvtwKMrZjtOoC7TNWMnqshBCXA1qcwF5Z3tb5hVz/npje7tSzJ6IZkf1qpzk6EuefsvZ7Z8UEx3YCBxdqFnvEgRIUy8NWr7UvUoF9RS3q7nZReBmjxS89YPl4JGLPMhb78e53ZP07kVWXX8zVBKECCNWwzeTTyV/Qog1Y9N3EfPeer2ofJEIWi2u0pY4zwEeFZsmmujbznPI0pTFedPxKdKqO1oSIcFWXCnfJzc8Dn6wByoMzuEavJFWAXgSf62tp4vwqZ2I92zwsvIzJDdcl1wRs1DCpWYKremfM5Z1kZI8w="
 Gemfile:
   required:
     ':development':
+      - gem: 'puppet-blacksmith'
+        version: '>= 5.0.0'
       - gem: 'puppet-lint-absolute_template_path'
         version: '>= 1.0.1'
       - gem: 'puppet-lint-alias-check'
@@ -51,11 +48,21 @@ Gemfile:
       # see: https://github.com/puppetlabs/r10k/issues/930
       - gem: 'cri'
         version: '2.15.6'
-      - gem: 'rspec-json_expectations'
-        version: '>= 2.2.0'
       - gem: 'yaml-lint'
         version: '>= 0.0.10'
 # Rakefile:
 #   extras:
 #     - "# exclude plans because puppet-syntax doesn't support them yet: https://github.com/voxpupuli/puppet-syntax/issues/95"
 #     - 'PuppetSyntax.exclude_paths = ["plans/**/*", "vendor/**/*"]'
+spec/spec_helper.rb:
+  mock_with: ':rspec'
+.travis.yml:
+  # we've converted over to GitHub actions
+  unmanaged: true
+# .travis.yml:
+#   deploy_to_forge:
+#     enabled: true
+#   user: encore
+#   secure: "rSxtW5opNBOGqj0iWgLV2t9tWJvFgBRUVeH25Wi9XqVkl3O+Yki0xsBAkrtG4UXrtbkYm5plF8GnwbsahH6XA/91ydl6uQkI/Xhn7EbC2FXTeWdNadPc/kQWDkRxgJ1ChWscS6WRoWApTDWadjQCNMzl4CgzYHyz8H9YBHFa/isPxBdGmoZYJ3/qPPxdjUSexeLxZf8gxVTJHJwe5VJik0CQ1eOu31//WDXUo6Erm0OuivWC5C3OnnrezH3vW27mqp4MCr1Uv6kw7NETM6seEHQdDKl1itOcXpayOMlw/nxTVBas03M7CfCz3CC2d9qzWjb5J2KxSjwO3RJo/oX8MaTrJDQ+ydcPC9T6uO7dX/Wm9hzHTBah4MzzMHtHfNBCS8Rmpson8BCfZVolRaWRjBRwSB54H2jOgBvclqgR2skVWhuvpFKhxAhH2et5HdYf81L8TgW24tjfbBsf4hYSrqG/sM0yzt/cY4u0N4SVN+6P86DRuvbdTKH+KpAPRRtTgHw0i+3E9wce4XFs6B5JrSSjjHR3sWXdZMb8bVkugHJXyQgTQKf94aNyRfu5tt6174SaBBSOLLR+CDtb8MP1egYfCRXWqA2OQhNcB/2/XhrE01e5CGCj8jepJ8APHfwTLZWVPlHETQr1iFqYZsGjPMaoB1SR4hUN5BaZ2n0g77A="
+
+

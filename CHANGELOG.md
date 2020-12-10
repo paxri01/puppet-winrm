@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 ## Development
 
+- Switch from Travis to GitHub Actions
+
+  Contributed by Nick Maludy (@nmaludy)
+
 ## Release 0.1.2 (2020-06-10)
 
 - Added Apache 2.0 LICENSE file
