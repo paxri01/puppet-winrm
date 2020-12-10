@@ -23,7 +23,7 @@ function Convert-StringToBoolean {
 $ErrorActionPreference = "Stop"
 
 Try {
-  $SubjectName = $env:COMPUTERNAME
+  $SubjectName = '<%= @cert_common_name %>'
   $HttpsListenerEnable = Convert-StringToBoolean -BoolString '<%= @https_listener_enable %>'
   $CertificateHash = '<%= @certificate_hash %>'
   $CertValidityDays = <%= @cert_validity_days %>

@@ -22,6 +22,11 @@
 # @param [Integer] cert_validity_days
 #  Length of time in days the Self Signed certificate is good for. Default is 1095
 #
+# @param [String] cert_common_name
+#  Common name of the self-signed or custom bound certificate. If you specify a custom
+#  certificate_hash, the CN (Common Name) in that certificate MUST match this value, otherwise
+#  the cert binding will not work.
+#
 # @param [String] execution_policy
 #  Server execution policy to follow.
 #  Available options are: 'AllSigned', 'Bypass', 'RemoteSigned', 'Restricted', 'Undefined', 'Unrestricted'
@@ -47,6 +52,7 @@ class winrm::params {
   $auth_negotiate_enable = true
   $certificate_hash = ''
   $cert_validity_days = 1095
+  $cert_common_name = $trusted['certname']
   $execution_policy = 'RemoteSigned'
   $http_listener_enable = false
   $https_listener_enable = true

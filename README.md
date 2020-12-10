@@ -121,7 +121,16 @@ Should winrm be listening for https connections. Defialt is true
 #### certificate_hash
 
 If not using a Self Signed Certificate then this hash can be passed in
-and used for the HTTPs/SSL listener
+and used for the HTTPs/SSL listener. When specify a custom certificate, you must
+also specify `cert_common_name` that matches the subject/common name in the certificate.
+
+```puppet
+class { 'winrm::config::listener::https':
+  https_listener_enable => true,
+  certificate_hash      => 'ABCDEF123456890',
+  cert_common_name      => 'hostname.domain.tld',
+}
+```
 
 #### cert_validity_days
 
@@ -134,6 +143,11 @@ class { 'winrm::config::listener::https':
   https_listener_enable => true,
 }
 ```
+#### cert_common_name
+
+Common name of the self-signed or custom bound certificate. If you specify a custom
+certificate_hash, the CN (Common Name) in that certificate MUST match this value, otherwise
+the cert binding will not work.
 
 #### local_account_token_filter_policy_enable
 
