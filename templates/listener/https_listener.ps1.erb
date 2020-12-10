@@ -111,18 +111,20 @@ Try {
   $listeners = Get-ChildItem WSMan:\localhost\Listener
   # True
   If ($HttpsListenerEnable) {
-    If (!($listeners | Where {$_.Keys -like "TRANSPORT=HTTPS"})) {
-      # Create the hashtables of settings to be used.
-      $valueset = @{
-        Hostname = $SubjectName
-      }
+    # Create the hashtables of settings to be used.
+    $valueset = @{
+      Hostname = $SubjectName
+    }
 
-      If ($CertificateHash) {
-        $valueset['CertificateThumbprint'] = $CertificateHash
-      } Else {
-        $valueset['CertificateThumbprint'] = New-LegacySelfSignedCert -SubjectName $SubjectName -ValidDays $CertValidityDays
-      }
+    If ($CertificateHash) {
+      $valueset['CertificateThumbprint'] = $CertificateHash
+    } Else {
+      $valueset['CertificateThumbprint'] = New-LegacySelfSignedCert -SubjectName $SubjectName -ValidDays $CertValidityDays
+    }
 
+    If (($listeners | Where {$_.Keys -like "TRANSPORT=HTTPS"})) {
+      Set-WSManInstance -ResourceURI 'winrm/config/Listener' -SelectorSet $selectorset -ValueSet $valueset
+    } Else {
       New-WSManInstance -ResourceURI 'winrm/config/Listener' -SelectorSet $selectorset -ValueSet $valueset
     }
   # False
