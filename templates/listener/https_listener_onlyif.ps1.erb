@@ -28,26 +28,27 @@ Try {
   $CertificateHash = '<%= @certificate_hash %>'
   $CertValidityDays = <%= @cert_validity_days %>
 
-  $listeners = Get-ChildItem WSMan:\localhost\Listener
-  # True
+  $listeners = @(Get-WSManInstance -ResourceURI 'winrm/config/Listener' -Enumerate)
   If ($HttpsListenerEnable) {
-    If (!($listeners | Where {$_.Keys -like "TRANSPORT=HTTPS"})) {
+    $https_listeners = @($listeners | Where {$_.Transport -eq "HTTPS"})
+    If ($https_listeners) {
+      if ($CertificateHash) {
+        Foreach ($https_list in $https_listeners) {
+          If ($https_list.CertificateThumbprint -ne $CertificateHash) {
+            # Certificate hash doesn't match
+            Exit 0
+          }
+        }
+        # if all certs match, we'll exit 1 below (fall through)
+      }
+      # if all certs match, we'll exit 1 below (fall through)
+    }
+    Else {
       # No ssl listener and there there should be
       Exit 0
-    } Else {
-      # Ssl listener and there there should be
-      Exit 1
-    }
-  # False
-  } Else {
-    If (($listeners | Where {$_.Keys -like "TRANSPORT=HTTPS"})) {
-      # Ssl listener and there should not be
-      Exit 0
-    } Else {
-      # No ssl listener and there should not be
-      Exit 1
     }
   }
+  Exit 1
 } Catch {
   $exception_str = $_ | Out-String
   Write-Output "[$(Get-Date -Format 'o')] an error occurred: $exception_str"
