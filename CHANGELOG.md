@@ -7,6 +7,10 @@ All notable changes to this project will be documented in this file.
 - Switch from Travis to GitHub Actions
 
   Contributed by Nick Maludy (@nmaludy)
+  
+- Allow for binding SSL certificates in HTTPS listener.
+
+  Contributed by Nick Maludy (@nmaludy)
 
 ## Release 0.1.2 (2020-06-10)
 
