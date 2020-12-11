@@ -1,6 +1,6 @@
 {
   "name": "encore-winrm",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "author": "Encore Technologies",
   "summary": "Module for configuring and managing Windows WinRM configurations",
   "license": "Apache-2.0",

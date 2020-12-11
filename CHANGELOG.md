@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## Development
+## Release 0.2.0 (2020-12-11)
 
 - Switch from Travis to GitHub Actions
 
