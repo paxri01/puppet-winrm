@@ -64,7 +64,5 @@ class winrm (
   contain winrm::service
   contain winrm::config
 
-  Class['winrm::service']
-  ~> Class['winrm::config']
-
+  Class['winrm::service'] -> Class['winrm::config']
 }
