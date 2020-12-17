@@ -12,11 +12,11 @@ class winrm::config {
   contain winrm::config::firewall
 
   Class['winrm::config::allow_unencrypted']
-  ~> Class['winrm::config::ps_remoting']
-  ~> Class['winrm::config::execution_policy']
-  ~> Class['winrm::config::localaccounttokenfilter']
-  ~> Class['winrm::config::auth']
-  ~> Class['winrm::config::listener::http']
-  ~> Class['winrm::config::listener::https']
-  ~> Class['winrm::config::firewall']
+  -> Class['winrm::config::ps_remoting']
+  -> Class['winrm::config::execution_policy']
+  -> Class['winrm::config::localaccounttokenfilter']
+  -> Class['winrm::config::auth']
+  -> Class['winrm::config::listener::http']
+  -> Class['winrm::config::listener::https']
+  -> Class['winrm::config::firewall']
 }
