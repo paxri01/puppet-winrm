@@ -1,6 +1,6 @@
 {
   "name": "encore-winrm",
-  "version": "0.2.1",
+  "version": "1.0.0",
   "author": "Encore Technologies",
   "summary": "Module for configuring and managing Windows WinRM configurations",
   "license": "Apache-2.0",
@@ -10,11 +10,11 @@
   "dependencies": [
     {
       "name": "puppetlabs/powershell",
-      "version_requirement": ">= 3.0.1 < 4.0.0"
+      "version_requirement": ">= 3.0.1 < 7.0.0"
     },
     {
       "name": "puppetlabs/registry",
-      "version_requirement": ">= 1.1.4 < 2.0.0"
+      "version_requirement": ">= 1.1.4 < 6.0.0"
     }
   ],
   "operatingsystem_support": [
@@ -30,7 +30,7 @@
   "requirements": [
     {
       "name": "puppet",
-      "version_requirement": ">= 4.10.0 < 7.0.0"
+      "version_requirement": ">= 6.0.0 < 8.0.0"
     }
   ],
   "tags": [
@@ -38,7 +38,7 @@
     "remote",
     "management"
   ],
-  "pdk-version": "1.18.1",
-  "template-url": "pdk-default#1.18.1",
-  "template-ref": "tags/1.18.1-0-g3d2e75c"
+  "pdk-version": "2.7.1",
+  "template-url": "pdk-default#2.7.4",
+  "template-ref": "tags/2.7.4-0-g58edf57"
 }
